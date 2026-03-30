@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" width="200" height="48">
+  <rect width="200" height="48" fill="#0a0a0a"/>
+  <text
+    x="8"
+    y="33"
+    font-family="'JetBrains Mono', 'Courier New', monospace"
+    font-size="22"
+    font-weight="700"
+    letter-spacing="3"
+    fill="#00ff41"
+  >VSQ</text>
+  <text
+    x="72"
+    y="33"
+    font-family="'JetBrains Mono', 'Courier New', monospace"
+    font-size="22"
+    font-weight="700"
+    fill="#ffffff"
+  >.</text>
+  <text
+    x="82"
+    y="33"
+    font-family="'JetBrains Mono', 'Courier New', monospace"
+    font-size="22"
+    font-weight="700"
+    letter-spacing="2"
+    fill="#ffffff"
+  >NEWS</text>
+</svg>
