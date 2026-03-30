@@ -8,6 +8,7 @@ export interface Article {
   isoDate: string;
   category: string;
   excerpt: string;
+  fullHtml: string;
   thumbnail: string | null;
   lang: Lang;
 }

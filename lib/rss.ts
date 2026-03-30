@@ -75,6 +75,8 @@ export async function fetchArticles(lang: Lang): Promise<Article[]> {
       item.content ||
       item.contentSnippet ||
       '';
+    // Keep full HTML for article page; strip for excerpt/listing
+    const fullHtml = rawExcerpt;
     const excerpt = stripHtml(rawExcerpt).slice(0, 300);
     const thumbnail = extractThumbnail(itemAny);
     const pubDate = isoDate
@@ -93,6 +95,7 @@ export async function fetchArticles(lang: Lang): Promise<Article[]> {
       isoDate,
       category: String(category),
       excerpt,
+      fullHtml,
       thumbnail,
       lang,
     });

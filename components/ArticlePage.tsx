@@ -63,12 +63,23 @@ export default function ArticlePage({ article, lang }: Props) {
           </div>
         )}
 
-        {/* Excerpt */}
-        {article.excerpt && (
+        {/* Full article body */}
+        {article.fullHtml ? (
+          <div
+            className="prose prose-lg max-w-none mb-8 text-gray-700 leading-relaxed
+              prose-img:rounded-lg prose-img:w-full prose-img:my-6
+              prose-a:text-blue-600 prose-a:underline
+              prose-h2:text-xl prose-h2:font-bold prose-h2:mt-8
+              prose-h3:text-lg prose-h3:font-semibold prose-h3:mt-6
+              prose-p:my-4 prose-p:leading-8"
+            itemProp="articleBody"
+            dangerouslySetInnerHTML={{ __html: article.fullHtml }}
+          />
+        ) : article.excerpt ? (
           <div className="prose prose-lg max-w-none mb-8 text-gray-700 leading-relaxed" itemProp="description">
             <p>{article.excerpt}</p>
           </div>
-        )}
+        ) : null}
 
         {/* Read original */}
         <div className="border-t border-gray-200 pt-6 mb-10">
