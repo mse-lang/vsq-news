@@ -5,16 +5,46 @@ import Link from 'next/link';
 import { Article, Lang, LANG_NAMES } from '@/lib/types';
 import Logo from './Logo';
 
+const BASE_URL = 'https://vsq.news';
+
 interface Props {
   article: Article;
   lang: Lang;
 }
 
 export default function ArticlePage({ article, lang }: Props) {
-  const backHref = `/${lang}`;
+  const backHref = lang === 'en' ? '/' : `/${lang}`;
+  const articleUrl = `${BASE_URL}${lang === 'ko' ? `/${article.slug}` : `/${lang}/${article.slug}`}`;
+
+  // JSON-LD NewsArticle schema
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: article.title,
+    description: article.excerpt,
+    url: articleUrl,
+    datePublished: article.isoDate,
+    dateModified: article.isoDate,
+    author: { '@type': 'Organization', name: 'VentureSquare', url: 'https://www.venturesquare.net' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'VSQ.News',
+      logo: { '@type': 'ImageObject', url: `${BASE_URL}/logo.svg` },
+    },
+    image: article.thumbnail ? { '@type': 'ImageObject', url: article.thumbnail } : undefined,
+    inLanguage: lang,
+    isAccessibleForFree: true,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
+    sourceOrganization: { '@type': 'Organization', name: 'VentureSquare', url: 'https://www.venturesquare.net' },
+    keywords: article.category,
+    articleSection: article.category,
+  };
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
+      {/* JSON-LD */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
       {/* Header */}
       <header className="bg-[#0a0a0a] px-4 py-3 flex items-center justify-between">
         <Link href={backHref}>
@@ -99,7 +129,10 @@ export default function ArticlePage({ article, lang }: Props) {
         {/* Schema.org hidden metadata */}
         <meta itemProp="author" content="VentureSquare" />
         <meta itemProp="publisher" content="VSQ.News" />
-        <link itemProp="url" href={article.link} />
+        <meta itemProp="inLanguage" content={lang} />
+        <meta itemProp="isAccessibleForFree" content="True" />
+        <link itemProp="url" href={articleUrl} />
+        <link itemProp="mainEntityOfPage" href={articleUrl} />
       </article>
 
       {/* Disqus */}
